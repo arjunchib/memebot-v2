@@ -1,6 +1,10 @@
 const fs = require('fs')
 const Discord = require('discord.js')
-const { prefix, token } = require('./config.json')
+const develop = (process.argv[2] == 'develop')
+
+const { prefix, token } = develop
+  ? require('./.config-dev.json')
+  : require('./.config.json')
 
 const client = new Discord.Client()
 client.commands = new Discord.Collection()
