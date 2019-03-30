@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "discord.js": "^11.4.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  }
+}
