@@ -1,4 +1,5 @@
 {
+  "license": "UNLICENSED",
   "scripts": {
     "start": "node index.js",
     "develop": "node index.js develop"
