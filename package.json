@@ -1,5 +1,9 @@
 {
+  "name": "memebot",
+  "version": "0.1.0",
   "license": "UNLICENSED",
+  "main": "index.js",
+  "repository": "https://github.com/arjunchib/memebot.git",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "develop": "NODE_ENV=development node bot.js"
