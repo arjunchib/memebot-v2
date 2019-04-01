@@ -1,9 +1,9 @@
 const { ShardingManager } = require('discord.js')
-const develop = (process.argv[2] == 'develop')
+const production = (process.env.NODE_ENV == 'production')
 
-const { token } = develop
-  ? require('./.config-dev.json')
-  : require('./.config.json')
+const { token } = production
+  ? require('./.config.json')
+  : require('./.config-dev.json')
 
 const manager = new ShardingManager('./bot.js', { token: token })
 
