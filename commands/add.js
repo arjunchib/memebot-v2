@@ -1,8 +1,9 @@
 module.exports = {
 	name: 'add',
-	description: 'Downloads audio from youtube and creates a meme',
+	description: 'creates a meme from a youtube link',
+	usage: 'add <url> <start> <end> <name> [aliases...]',
+	minArgs: 4,
 	execute(message, args) {
 		console.log(args)
-		message.channel.send('Pong.')
 	}
 }
