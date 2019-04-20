@@ -6,12 +6,14 @@
   "repository": "https://github.com/arjunchib/memebot.git",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
-    "develop": "NODE_ENV=development node bot.js"
+    "develop": "NODE_ENV=development nodemon bot.js",
+    "deploy": "./deploy"
   },
   "dependencies": {
     "discord.js": "^11.4.2"
   },
   "devDependencies": {
-    "eslint": "^5.16.0"
+    "eslint": "^5.16.0",
+    "nodemon": "^1.18.11"
   }
 }
