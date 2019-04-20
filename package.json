@@ -10,7 +10,8 @@
     "deploy": "./deploy"
   },
   "dependencies": {
-    "discord.js": "^11.4.2"
+    "discord.js": "^11.4.2",
+    "validator": "^10.11.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

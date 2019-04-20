@@ -52,7 +52,7 @@ client.on('message', message => {
   const upperCheck = !command.maxArgs || args.length <= command.maxArgs
   if (!lowerCheck || !upperCheck) {
     return message.channel.send(
-`Wrong number of arguments.
+`wrong number of arguments
 \`${ command.usage }\``
     )
   }
@@ -62,7 +62,7 @@ client.on('message', message => {
     command.execute(message, args)
 	} catch (error) {
     console.error(error)
-    message.channel.send('There was an error trying to execute that command!')
+    message.channel.send('there was an error trying to execute that command')
 	}
 })
 
