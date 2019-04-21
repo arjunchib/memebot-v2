@@ -5,9 +5,10 @@
   "main": "index.js",
   "repository": "https://github.com/arjunchib/memebot.git",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
-    "develop": "NODE_ENV=development nodemon bot.js",
-    "deploy": "./deploy"
+    "deploy": "scripts/deploy",
+    "server:start": "scripts/start",
+    "server:stop": "scripts/stop",
+    "develop": "NODE_ENV=development nodemon bot.js"
   },
   "dependencies": {
     "discord.js": "^11.4.2",
