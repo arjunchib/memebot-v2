@@ -49,7 +49,7 @@ client.on('message', message => {
 	if (!message.content.startsWith(prefix) || message.author.bot) return
 
   // Parse message
-	const args = message.content.slice(prefix.length).split(/ +/)
+	const args = message.content.slice(prefix.length).trim().split(/ +/)
 	const commandName = args.shift().toLowerCase()
 
   // Abort if not a command
