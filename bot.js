@@ -1,5 +1,6 @@
 const fs = require('fs')
 const Discord = require('discord.js')
+const sequelize = require('./sequelize.js')
 const production = (process.env.NODE_ENV == 'production')
 
 /* * * * * * * * * *
@@ -8,11 +9,21 @@ const production = (process.env.NODE_ENV == 'production')
 
 // Get environment vars
 const { prefix, token } = production
-  ? require('./.config.json')
+  ? require('./.config-prod.json')
   : require('./.config-dev.json')
 
 // Start client
 const client = new Discord.Client()
+
+// Connect to database
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection to database has been established successfully.')
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err)
+  })
 
 // Get commands
 client.commands = new Discord.Collection()
@@ -60,8 +71,8 @@ client.on('message', message => {
   // Execute command
 	try {
     command.execute(message, args)
-	} catch (error) {
-    console.error(error)
+	} catch (err) {
+    console.error(err)
     message.channel.send('there was an error trying to execute that command')
 	}
 })

@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "discord.js": "^11.4.2",
+    "pg": "^7.10.0",
+    "sequelize": "^5.7.1",
     "validator": "^10.11.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
-    "nodemon": "^1.18.11"
+    "nodemon": "^1.18.11",
+    "sqlite3": "^4.0.6"
   }
 }
