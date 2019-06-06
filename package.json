@@ -18,7 +18,9 @@
   },
   "devDependencies": {
     "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.3.0",
     "nodemon": "^1.18.11",
+    "prettier": "1.17.1",
     "sqlite3": "^4.0.6"
   }
 }
