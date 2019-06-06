@@ -2,7 +2,7 @@
   "name": "memebot",
   "version": "0.1.0",
   "license": "UNLICENSED",
-  "main": "index.js",
+  "main": "src/index.js",
   "repository": "https://github.com/arjunchib/memebot.git",
   "scripts": {
     "deploy": "scripts/deploy",
