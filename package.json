@@ -5,13 +5,11 @@
   "main": "src/index.js",
   "repository": "https://github.com/arjunchib/memebot.git",
   "scripts": {
-    "deploy": "scripts/deploy",
-    "server:start": "scripts/start",
-    "server:stop": "scripts/stop",
-    "develop": "NODE_ENV=development nodemon bot.js"
+    "develop": "nodemon ./src/bot.js"
   },
   "dependencies": {
     "discord.js": "^11.4.2",
+    "dotenv": "^8.0.0",
     "pg": "^7.10.0",
     "sequelize": "^5.7.1",
     "validator": "^10.11.0"
