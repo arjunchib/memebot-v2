@@ -5,22 +5,17 @@
   "main": "src/index.js",
   "repository": "https://github.com/arjunchib/memebot.git",
   "scripts": {
-    "deploy": "scripts/deploy",
-    "server:start": "scripts/start",
-    "server:stop": "scripts/stop",
-    "develop": "NODE_ENV=development nodemon bot.js"
+    "develop": "nodemon ./src/bot.js"
   },
   "dependencies": {
     "discord.js": "^11.4.2",
-    "pg": "^7.10.0",
-    "sequelize": "^5.7.1",
+    "dotenv": "^8.0.0",
     "validator": "^10.11.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
     "nodemon": "^1.18.11",
-    "prettier": "1.17.1",
-    "sqlite3": "^4.0.6"
+    "prettier": "1.17.1"
   }
 }

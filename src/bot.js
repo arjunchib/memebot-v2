@@ -1,35 +1,23 @@
 const fs = require('fs')
+const path = require('path')
 const Discord = require('discord.js')
-const sequelize = require('./sequelize.js')
-const production = process.env.NODE_ENV == 'production'
+require('dotenv').config()
 
 /* * * * * * * * * *
  *  SETUP CLIENT   *
  * * * * * * * * * */
 
 // Get environment vars
-const { prefix, token } = production
-  ? require('./.config-prod.json')
-  : require('./.config-dev.json')
+const prefix = process.env.COMMAND_PREFIX
 
 // Start client
 const client = new Discord.Client()
-
-// Connect to database
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection to database has been established successfully.')
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err)
-  })
 
 // Get commands
 client.commands = new Discord.Collection()
 
 const commandFiles = fs
-  .readdirSync('./commands')
+  .readdirSync(path.resolve(__dirname, 'commands'))
   .filter(file => file.endsWith('.js'))
 
 for (const file of commandFiles) {
@@ -81,4 +69,4 @@ client.on('message', message => {
   }
 })
 
-client.login(token)
+client.login(process.env.DISCORD_TOKEN)
