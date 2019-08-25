@@ -1,11 +1,17 @@
 const validator = require('validator')
 const client = require('../client.js')
 const CommandError = require('../CommandError.js')
-
-const hostWhitelist = ['www.youtube.com', 'youtube.com', 'youtu.be']
+const ytdl = require('ytdl-core')
+const ffmpeg = require('fluent-ffmpeg')
+const path = require('path')
 
 function getURL(args) {
-  if (!validator.isURL(args[0], { host_whitelist: hostWhitelist })) {
+  const hostWhitelist = ['www.youtube.com', 'youtube.com', 'youtu.be']
+
+  if (
+    !validator.isURL(args[0], { host_whitelist: hostWhitelist }) &&
+    ytdl.validateURL(args[0])
+  ) {
     throw new CommandError('the URL must be a youtube link')
   }
   return args[0]
@@ -55,17 +61,38 @@ function getAliases(args) {
   return aliases
 }
 
+function downloadFile(data) {
+  const stream = ytdl(data.url, { filter: 'audio' })
+  const outputFile = path.resolve('.cache', 'audio', `${data.name}.mp3`)
+  ffmpeg(stream)
+    .noVideo()
+    .seekOutput(data.start)
+    .format('mp3')
+    .outputOptions(['-write_xing 0', `-to ${data.end}`])
+    .on('end', () => {
+      console.log('Saved file!')
+    })
+    .on('error', () => {
+      throw new CommandError('something went wrong when downloading your meme')
+    })
+    .save(outputFile)
+}
+
 module.exports = {
   name: 'add',
   description: 'creates a meme from a youtube link',
   usage: 'add <url> <start> <end> <name> [aliases...]',
   minArgs: 4,
   execute(message, args) {
+    // parse args
     const data = {}
     data.url = getURL(args)
     Object.assign(data, getTimes(args))
     data.name = args[3]
     data.aliases = getAliases(args)
+
+    // download file
+    downloadFile(data)
 
     /*
     const query = `{

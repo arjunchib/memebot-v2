@@ -10,6 +10,15 @@ require('dotenv').config()
 // Get environment vars
 const prefix = process.env.COMMAND_PREFIX
 
+// Setup file structure
+function initDir(dir) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
+}
+initDir(path.resolve('.cache'))
+initDir(path.resolve('.cache', 'audio'))
+
 // Start client
 const client = new Discord.Client()
 
