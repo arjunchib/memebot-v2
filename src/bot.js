@@ -64,8 +64,12 @@ client.on('message', message => {
   try {
     command.execute(message, args)
   } catch (err) {
-    console.error(err)
-    message.channel.send('there was an error trying to execute that command')
+    if (err.name === 'CommandError') {
+      message.channel.send(err.message)
+    } else {
+      console.error(err)
+      message.channel.send('there was an error trying to execute that command')
+    }
   }
 })
 

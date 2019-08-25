@@ -1,4 +1,8 @@
 const validator = require('validator')
+const client = require('../client.js')
+const CommandError = require('../CommandError.js')
+
+const hostWhitelist = ['www.youtube.com', 'youtube.com', 'youtu.be']
 
 module.exports = {
   name: 'add',
@@ -6,13 +10,24 @@ module.exports = {
   usage: 'add <url> <start> <end> <name> [aliases...]',
   minArgs: 4,
   execute(message, args) {
+    const query = `{
+      memes {
+        name
+        tags
+        author {
+          id
+          name
+        }
+      }
+    }`
+
+    client.request(query).then(data => console.log(data))
+
     const data = {}
 
     // Parse url
-    const hostWhitelist = ['www.youtube.com', 'youtube.com', 'youtu.be']
-
     if (!validator.isURL(args[0], { host_whitelist: hostWhitelist })) {
-      return message.channel.send('the URL must be a youtube link')
+      throw new CommandError('the URL must be a youtube link')
     }
 
     data.url = args[0]
@@ -38,7 +53,7 @@ module.exports = {
     }
 
     if (invalidTimes.length > 0) {
-      return message.channel.send(
+      throw new CommandError(
         `the ${invalidTimes.join(
           ' and '
         )} time must match \`[-][HH:]MM:SS[.m...]\` or \`[-]S+[.m...]\``
