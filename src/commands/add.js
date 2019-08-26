@@ -90,23 +90,34 @@ module.exports = {
     Object.assign(data, getTimes(args))
     data.name = args[3]
     data.aliases = getAliases(args)
+    data.author = {
+      id: message.member.id,
+      name: message.member.displayName
+    }
 
-    // download file
-    downloadFile(data)
+    const outputFile = path.resolve('.cache', 'audio', `${data.name}.mp3`)
 
-    /*
-    const query = `{
-      memes {
+    const query = `mutation {
+      createMeme(name: "${data.name}", author: {id:"${
+      data.author.id
+    }", name: "${data.author.name}"}, url: "${outputFile}") {
+        _id
         name
-        tags
         author {
           id
           name
         }
+        url
+        commands
+        tags
+        volume
+        createdAt
       }
     }`
 
     client.request(query).then(data => console.log(data))
-    */
+
+    // download file
+    downloadFile(data)
   }
 }
