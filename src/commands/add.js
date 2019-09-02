@@ -85,17 +85,17 @@ module.exports = {
   minArgs: 4,
   async execute(message, args) {
     // parse args
-    const data = {}
-    data.url = getURL(args)
-    Object.assign(data, getTimes(args))
-    data.name = args[3]
-    data.aliases = getAliases(args)
-    data.author = {
+    const meme = {}
+    meme.url = getURL(args)
+    Object.assign(meme, getTimes(args))
+    meme.name = args[3]
+    meme.aliases = getAliases(args)
+    meme.author = {
       id: message.member.id,
       name: message.member.displayName
     }
 
-    const outputFile = path.resolve('.cache', 'audio', `${data.name}.mp3`)
+    const outputFile = path.resolve('.cache', 'audio', `${meme.name}.mp3`)
 
     const query = `mutation CreateMeme($name: String!, $authorID: ID!, $authorName: String!, $url: String!){
       createMeme(name: $name, author: {id: $authorID, name: $authorName}, url: $url) {
@@ -114,22 +114,21 @@ module.exports = {
     }`
 
     try {
-      const response = await client.request(query, {
-        name: data.name,
-        authorID: data.author.id,
-        authorName: data.author.name,
+      await client.request(query, {
+        name: meme.name,
+        authorID: meme.author.id,
+        authorName: meme.author.name,
         url: outputFile
       })
-      if (!response.response.errors) {
-        downloadFile(data)
-      } else if (response.response.errors[0].message.includes('E11000')) {
-        throw new CommandError('A meme by this name already exists')
-      } else {
-        throw new CommandError('Cannot add this meme')
-      }
+      downloadFile(meme)
     } catch (error) {
       console.error(error)
-      throw new CommandError('Something went wrong when adding your meme')
+      console.error(JSON.stringify(error, undefined, 2))
+      if (error.response.errors[0].message.includes('E11000')) {
+        throw new CommandError('A meme with this name already exists')
+      } else {
+        throw new CommandError('Something went wrong when adding your meme')
+      }
     }
   }
 }
