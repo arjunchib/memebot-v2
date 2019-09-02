@@ -10,6 +10,15 @@ require('dotenv').config()
 // Get environment vars
 const prefix = process.env.COMMAND_PREFIX
 
+// Setup file structure
+function initDir(dir) {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir)
+  }
+}
+initDir(path.resolve('.cache'))
+initDir(path.resolve('.cache', 'audio'))
+
 // Start client
 const client = new Discord.Client()
 
@@ -61,12 +70,14 @@ client.on('message', message => {
   }
 
   // Execute command
-  try {
-    command.execute(message, args)
-  } catch (err) {
-    console.error(err)
-    message.channel.send('there was an error trying to execute that command')
-  }
+  command.execute(message, args).catch(error => {
+    if (error.name === 'CommandError') {
+      message.channel.send(error.message)
+    } else {
+      console.error(error)
+      message.channel.send('there was an error trying to execute that command')
+    }
+  })
 })
 
 client.login(process.env.DISCORD_TOKEN)
