@@ -1,4 +1,6 @@
-module.exports = message => {
-  this.name = 'CommandError'
-  this.message = message || 'Error in command'
+module.exports = class CommandError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = 'CommandError'
+  }
 }

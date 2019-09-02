@@ -70,16 +70,14 @@ client.on('message', message => {
   }
 
   // Execute command
-  try {
-    command.execute(message, args)
-  } catch (err) {
-    if (err.name === 'CommandError') {
-      message.channel.send(err.message)
+  command.execute(message, args).catch(error => {
+    if (error.name === 'CommandError') {
+      message.channel.send(error.message)
     } else {
-      console.error(err)
+      console.error(error)
       message.channel.send('there was an error trying to execute that command')
     }
-  }
+  })
 })
 
 client.login(process.env.DISCORD_TOKEN)

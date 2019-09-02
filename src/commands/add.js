@@ -12,7 +12,7 @@ function getURL(args) {
     !validator.isURL(args[0], { host_whitelist: hostWhitelist }) &&
     ytdl.validateURL(args[0])
   ) {
-    throw new CommandError('the URL must be a youtube link')
+    throw new CommandError('The URL must be a youtube link')
   }
   return args[0]
 }
@@ -73,7 +73,7 @@ function downloadFile(data) {
       console.log('Saved file!')
     })
     .on('error', () => {
-      throw new CommandError('something went wrong when downloading your meme')
+      throw new CommandError('Something went wrong when downloading your meme')
     })
     .save(outputFile)
 }
@@ -83,7 +83,7 @@ module.exports = {
   description: 'creates a meme from a youtube link',
   usage: 'add <url> <start> <end> <name> [aliases...]',
   minArgs: 4,
-  execute(message, args) {
+  async execute(message, args) {
     // parse args
     const data = {}
     data.url = getURL(args)
@@ -97,10 +97,8 @@ module.exports = {
 
     const outputFile = path.resolve('.cache', 'audio', `${data.name}.mp3`)
 
-    const query = `mutation {
-      createMeme(name: "${data.name}", author: {id:"${
-      data.author.id
-    }", name: "${data.author.name}"}, url: "${outputFile}") {
+    const query = `mutation CreateMeme($name: String!, $authorID: ID!, $authorName: String!, $url: String!){
+      createMeme(name: $name, author: {id: $authorID, name: $authorName}, url: $url) {
         _id
         name
         author {
@@ -115,9 +113,23 @@ module.exports = {
       }
     }`
 
-    client.request(query).then(data => console.log(data))
-
-    // download file
-    downloadFile(data)
+    try {
+      const response = await client.request(query, {
+        name: data.name,
+        authorID: data.author.id,
+        authorName: data.author.name,
+        url: outputFile
+      })
+      if (!response.response.errors) {
+        downloadFile(data)
+      } else if (response.response.errors[0].message.includes('E11000')) {
+        throw new CommandError('A meme by this name already exists')
+      } else {
+        throw new CommandError('Cannot add this meme')
+      }
+    } catch (error) {
+      console.error(error)
+      throw new CommandError('Something went wrong when adding your meme')
+    }
   }
 }
