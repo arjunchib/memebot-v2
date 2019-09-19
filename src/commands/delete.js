@@ -31,8 +31,7 @@ module.exports = {
     }`
 
     try {
-      await client.request(query, { name })
-      await fs.unlink(file)
+      await Promise.all([client.request(query, { name }), fs.unlink(file)])
       message.channel.send(`Deleted ${name}`)
     } catch (error) {
       console.error(error)
