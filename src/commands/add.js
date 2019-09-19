@@ -84,7 +84,6 @@ module.exports = {
   usage: 'add <url> <start> <end> <name> [aliases...]',
   minArgs: 4,
   async execute(message, args) {
-    // parse args
     const meme = {}
     meme.url = getURL(args)
     Object.assign(meme, getTimes(args))
