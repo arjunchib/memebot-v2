@@ -1,7 +1,6 @@
 const client = require('../client.js')
 const CommandError = require('../CommandError.js')
-
-const codeBlockify = str => `\`\`\`${str}\`\`\``
+const { codeBlockify } = require('../utils.js')
 
 module.exports = {
   name: 'info',
