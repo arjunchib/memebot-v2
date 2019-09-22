@@ -1,3 +1,4 @@
 module.exports = {
-  codeBlockify: str => `\`\`\`${str}\`\`\``
+  codeBlockify: (str, lang = 'javascript') => `\`\`\`${lang}
+${str}\`\`\``
 }
