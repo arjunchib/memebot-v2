@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const Discord = require('discord.js')
+const help = require('./help.js')
 require('dotenv').config()
 
 /* * * * * * * * * *
@@ -52,6 +53,12 @@ client.on('message', message => {
     .trim()
     .split(/ +/)
   const commandName = args.shift().toLowerCase()
+
+  // Check if help command
+  if (commandName === 'help') {
+    help(message, client.commands)
+    return
+  }
 
   // Abort if not a command
   if (!client.commands.has(commandName)) return
