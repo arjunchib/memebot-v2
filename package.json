@@ -19,6 +19,7 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
+    "node-opus": "^0.3.2",
     "nodemon": "^1.18.11",
     "prettier": "1.17.1"
   }

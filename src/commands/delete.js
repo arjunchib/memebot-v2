@@ -8,6 +8,7 @@ module.exports = {
   description: 'removes a command',
   usage: 'delete <name>',
   minArgs: 1,
+  maxArgs: 1,
   async execute(message, args) {
     const name = args[0]
     console.log(name)

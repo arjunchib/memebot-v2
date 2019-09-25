@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 const Discord = require('discord.js')
-const help = require('./help.js')
 require('dotenv').config()
 
 /* * * * * * * * * *
@@ -44,7 +43,7 @@ client.once('ready', () => {
 })
 
 client.on('message', message => {
-  // Abort if wrong prefix
+  // Abort if wrong prefix or from bot
   if (!message.content.startsWith(prefix) || message.author.bot) return
 
   // Parse message
@@ -52,18 +51,12 @@ client.on('message', message => {
     .slice(prefix.length)
     .trim()
     .split(/ +/)
-  const commandName = args.shift().toLowerCase()
-
-  // Check if help command
-  if (commandName === 'help') {
-    help(message, client.commands)
-    return
-  }
-
-  // Abort if not a command
-  if (!client.commands.has(commandName)) return
+  const providedCommand = args.shift().toLowerCase()
 
   // Get command
+  const commandName = client.commands.has(providedCommand)
+    ? providedCommand
+    : 'play'
   const command = client.commands.get(commandName)
 
   // Check arguement length
@@ -77,7 +70,13 @@ client.on('message', message => {
   }
 
   // Execute command
-  command.execute(message, args).catch(error => {
+  let params = args
+  if (commandName === 'help') {
+    params = client.commands
+  } else if (commandName === 'play') {
+    params = providedCommand
+  }
+  command.execute(message, params).catch(error => {
     if (error.name === 'CommandError') {
       message.channel.send(error.message)
     } else {

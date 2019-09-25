@@ -6,6 +6,7 @@ module.exports = {
   description: 'adds a tag to a meme',
   usage: 'tag <name> <tag>',
   minArgs: 2,
+  maxArgs: 2,
   async execute(message, args) {
     const name = args[0]
     const tag = args[1]

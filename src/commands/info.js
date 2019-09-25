@@ -7,6 +7,7 @@ module.exports = {
   description: 'get info about a meme',
   usage: 'info <command>',
   minArgs: 1,
+  maxArgs: 1,
   async execute(message, args) {
     const command = args[0]
 

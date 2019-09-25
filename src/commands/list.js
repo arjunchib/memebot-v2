@@ -7,6 +7,7 @@ module.exports = {
   description: 'list all memes',
   usage: 'list',
   minArgs: 0,
+  maxArgs: 0,
   async execute(message) {
     const query = `{
       memes {
