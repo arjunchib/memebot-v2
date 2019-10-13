@@ -14,7 +14,8 @@ module.exports = {
 
     const query = `query Meme($command: String!){
       meme(command: $command) {
-        url
+        url,
+        volume
       }
     }`
 
@@ -22,6 +23,7 @@ module.exports = {
       const { meme } = await client.request(query, { command })
       const connection = await message.member.voiceChannel.join()
       const dispatcher = connection.playFile(meme.url)
+      dispatcher.setVolumeLogarithmic(meme.volume)
       dispatcher.on('end', () => {
         connection.disconnect()
       })
