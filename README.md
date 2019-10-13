@@ -18,7 +18,7 @@ npm install
 Run ``npm run develop``
 
 ## Config
-Create/Edit ``.env`` file
+Rename ``.env.example`` to ``.env``
 
 ```
 COMMAND_PREFIX=!!
