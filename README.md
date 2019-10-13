@@ -15,7 +15,12 @@ git clone https://github.com/arjunchib/memebot.git
 cd memebot
 npm install
 ```
-
-## Usage
-
 Run ``npm run develop``
+
+## Config
+Create/Edit ``.env`` file
+
+```
+COMMAND_PREFIX=!!
+DISCORD_TOKEN=TOKEN
+```
