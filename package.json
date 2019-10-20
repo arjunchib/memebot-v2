@@ -8,19 +8,23 @@
     "develop": "nodemon ./src/bot.js"
   },
   "dependencies": {
+    "@discordjs/uws": "^11.149.1",
     "discord.js": "^11.4.2",
     "dotenv": "^8.0.0",
+    "erlpack": "hammerandchisel/erlpack",
     "fluent-ffmpeg": "^2.1.2",
     "graphql-request": "^1.8.2",
     "mz": "^2.7.0",
+    "node-opus": "^0.3.2",
+    "sodium": "^3.0.2",
     "validator": "^10.11.0",
     "ytdl-core": "^0.29.5"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
-    "node-opus": "^0.3.2",
     "nodemon": "^1.18.11",
     "prettier": "1.17.1"
   }
 }
+
