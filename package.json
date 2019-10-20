@@ -21,8 +21,8 @@
     "ytdl-core": "^0.29.5"
   },
   "devDependencies": {
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^4.3.0",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
     "nodemon": "^1.18.11",
     "prettier": "1.17.1"
   }
