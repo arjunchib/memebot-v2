@@ -16,7 +16,6 @@
     "graphql-request": "^1.8.2",
     "mz": "^2.7.0",
     "node-opus": "^0.3.2",
-    "sodium": "^3.0.2",
     "validator": "^10.11.0",
     "ytdl-core": "^0.29.5"
   },
@@ -25,6 +24,9 @@
     "eslint-config-prettier": "^6.4.0",
     "nodemon": "^1.18.11",
     "prettier": "1.17.1"
+  },
+  "optionalDependencies": {
+    "sodium": "^3.0.2"
   }
 }
 
