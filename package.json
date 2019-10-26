@@ -8,23 +8,24 @@
     "develop": "nodemon ./src/bot.js"
   },
   "dependencies": {
-    "@discordjs/uws": "^11.149.1",
-    "discord.js": "^11.4.2",
-    "dotenv": "^8.0.0",
-    "erlpack": "hammerandchisel/erlpack",
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0",
     "fluent-ffmpeg": "^2.1.2",
     "graphql-request": "^1.8.2",
     "mz": "^2.7.0",
-    "node-opus": "^0.3.2",
-    "sodium": "^3.0.2",
-    "validator": "^10.11.0",
-    "ytdl-core": "^0.29.5"
+    "node-opus": "^0.3.3",
+    "validator": "^11.1.0",
+    "ytdl-core": "^1.0.0"
   },
   "devDependencies": {
     "eslint": "^6.5.1",
-    "eslint-config-prettier": "^6.4.0",
-    "nodemon": "^1.18.11",
-    "prettier": "1.17.1"
+    "eslint-config-prettier": "^6.5.0",
+    "nodemon": "^1.19.4",
+    "prettier": "1.18.2"
+  },
+  "optionalDependencies": {
+    "@discordjs/uws": "^11.149.1",
+    "erlpack": "hammerandchisel/erlpack",
+    "sodium": "^3.0.2"
   }
 }
-
