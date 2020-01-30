@@ -43,23 +43,36 @@ client.once('ready', () => {
 })
 
 client.on('message', message => {
-  // Abort if wrong prefix or from bot
-  if (!message.content.startsWith(prefix) || message.author.bot) return
+  // Abort if it is a message from another bot (incl. ourselves)
+  if (message.author.bot) return
 
-  // Parse message
-  const args = message.content
-    .slice(prefix.length)
+  // tokenize message
+  const tokens = message.content
     .trim()
     .split(/ +/)
-  const providedCommand = args.shift().toLowerCase()
+
+  // Abort if first token doesn't match the selected prefix
+  // Special concern for old memebot prefix behavior (i.e. allow !meme with no space)
+  if (prefix === '!' && tokens[0][0] === prefix) {
+    tokens[0] = tokens[0].slice(1)
+  } else if (tokens[0] !== prefix) {
+    return
+  } else {
+    tokens.shift() // remove the prefix
+  }
+
+  const providedCommand = tokens.shift().toLowerCase()
+  const args = tokens
 
   // Get command
+  // Default behavior is for memebot to default to play a meme when the "command"
+  // doesn't match a currently registered command (i.e. !prefix hi 
   const commandName = client.commands.has(providedCommand)
     ? providedCommand
     : 'play'
   const command = client.commands.get(commandName)
 
-  // Check arguement length
+  // Check argument length
   const lowerCheck = !command.minArgs || args.length >= command.minArgs
   const upperCheck = !command.maxArgs || args.length <= command.maxArgs
   if (!lowerCheck || !upperCheck) {
