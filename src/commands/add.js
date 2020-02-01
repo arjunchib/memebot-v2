@@ -66,7 +66,7 @@ module.exports = {
     } catch (error) {
       console.error(error)
       console.error(JSON.stringify(error, undefined, 2))
-      if (error.response.errors[0].message.includes('E11000')) {
+      if (error.response.errors[0].message.includes('Duplicate')) {
         throw new CommandError('A meme with this name already exists')
       } else {
         throw new CommandError('Something went wrong when adding your meme')

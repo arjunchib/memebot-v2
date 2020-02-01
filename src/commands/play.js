@@ -22,6 +22,11 @@ module.exports = {
 
     try {
       const { meme } = await client.request(query, { command })
+
+      if (meme === null) {
+        throw new CommandError('There are no memes named ' + command + '.')
+      }
+
       const connection = await message.member.voiceChannel.join()
 
       http.get(process.env.MEMEBOT_API_ENDPOINT + meme.url, res => {
@@ -32,8 +37,12 @@ module.exports = {
         })
       })
     } catch (error) {
-      console.error(error)
-      throw new CommandError('Something went wrong when playing this meme')
+      if (error instanceof CommandError) {
+        throw error
+      } else {
+        console.error(error)
+        throw new CommandError('Something went wrong when playing this meme')
+      }
     }
   }
 }

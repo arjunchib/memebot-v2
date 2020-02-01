@@ -1,7 +1,5 @@
 const client = require('../client.js')
 const CommandError = require('../CommandError.js')
-const path = require('path')
-const fs = require('mz/fs')
 
 module.exports = {
   name: 'delete',
@@ -11,9 +9,6 @@ module.exports = {
   maxArgs: 1,
   async execute(message, args) {
     const name = args[0]
-    console.log(name)
-
-    const file = path.resolve('.cache', 'audio', `${name}.mp3`)
 
     const query = `mutation DeleteMeme($name: String!){
       deleteMeme(name: $name) {
@@ -32,7 +27,7 @@ module.exports = {
     }`
 
     try {
-      await Promise.all([client.request(query, { name }), fs.unlink(file)])
+      await client.request(query, { name })
       message.channel.send(`Deleted ${name}`)
     } catch (error) {
       console.error(error)
