@@ -43,8 +43,8 @@ client.once('ready', () => {
 })
 
 client.on('message', message => {
-  // Abort if wrong prefix or from bot
-  if (!message.content.startsWith(prefix) || message.author.bot) return
+  // Abort if wrong prefix or if message is from a bot
+  if (!message.content.startsWith(prefix + " ") || message.author.bot) return
 
   // Parse message
   const args = message.content
