@@ -29,12 +29,21 @@ module.exports = {
 
     try {
       const info = await client.request(query, { command })
+      console.log(typeof info)
+      if (info.meme === null) {
+        console.log(info)
+        throw new CommandError('There is no meme named ' + command + '.')
+      }
       message.channel.send(codeBlockify(JSON.stringify(info.meme, null, 2)))
     } catch (error) {
-      console.error(error)
-      throw new CommandError(
-        'Something went wrong when getting info on this meme'
-      )
+      if (error instanceof CommandError) {
+        throw error
+      } else {
+        console.error(error)
+        throw new CommandError(
+          'Something went wrong when getting info on this meme'
+        )
+      }
     }
   }
 }
