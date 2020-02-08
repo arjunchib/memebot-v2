@@ -18,7 +18,10 @@ module.exports = {
     try {
       const { memes } = await client.request(query)
       const list = memes.map(meme => meme.name)
-      message.channel.send(codeBlockify(JSON.stringify(list, null, 2)))
+      message.channel.send(JSON.stringify(list, null, ''), {
+        split: { char: ',', prepend: ' ' },
+        code: true
+      })
     } catch (error) {
       console.error(error)
       throw new CommandError('Something went wrong when listing memes')
