@@ -21,12 +21,6 @@ module.exports = {
     }`
 
     try {
-      const { meme } = await gql_client.request(query, { command })
-
-      if (meme === null) {
-        throw new CommandError('There are no memes named ' + command + '.')
-      }
-
       if (
         client.voiceConnections != null &&
         client.voiceConnections.find(
@@ -34,6 +28,12 @@ module.exports = {
         )
       ) {
         throw new CommandError('Memebot is already playing a meme.')
+      }
+
+      const { meme } = await gql_client.request(query, { command })
+
+      if (meme === null) {
+        throw new CommandError('There are no memes named ' + command + '.')
       }
 
       const connection = await message.member.voiceChannel.join()
