@@ -1,6 +1,5 @@
 const client = require('../client.js')
 const CommandError = require('../CommandError.js')
-const { codeBlockify } = require('../utils.js')
 
 module.exports = {
   name: 'list',
