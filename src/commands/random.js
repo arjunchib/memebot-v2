@@ -25,6 +25,8 @@ module.exports = {
       Math.floor(Math.random() * memes.length)
     ]
 
+    message.channel.send('Now playing ' + chosenMeme)
+
     play(message, chosenMeme, client)
   }
 }
