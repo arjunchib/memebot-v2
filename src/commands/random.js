@@ -8,7 +8,7 @@ module.exports = {
   minargs: 0,
   maxargs: 1,
 
-  async execute(message, args) {
+  async execute(message, args, client) {
     const all_query = `{
       memes {
         name
@@ -25,6 +25,6 @@ module.exports = {
       Math.floor(Math.random() * memes.length)
     ]
 
-    play(message, chosenMeme)
+    play(message, chosenMeme, client)
   }
 }
