@@ -1,0 +1,37 @@
+name: Deploy
+
+on: push
+
+env:
+  HOST: ${{ secrets.HOST }}
+  USERNAME: ${{ secrets.USERNAME }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@master
+      - name: Create identity file
+        env:
+          KEY: ${{ secrets.KEY }}
+        run: |
+          printf "%s" "$KEY" > "${HOME}/memebot_rsa"
+          chmod 600 ${HOME}/memebot_rsa
+      - name: Add secrets to PM2 Config
+        env:
+          MEMEBOT_API_BASE_URL: ${{ secrets.MEMEBOT_API_BASE_URL }}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: node ${GITHUB_WORKSPACE}/scripts/pm2-config.js DISCORD_TOKEN MEMEBOT_API_BASE_URL
+      - name: Upload files to memebot
+        run: rsync -a --delete --exclude ".git" -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${HOME}/memebot_rsa" ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
+      - name: Reload PM2 server
+        run: |
+          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${HOME}/memebot_rsa ${USERNAME}@${HOST} -T << EOF
+            cd ~/memebot/
+            nvm install
+            yarn
+            pm2 startOrReload ecosystem.config.json
+            pm2 save
+          EOF
