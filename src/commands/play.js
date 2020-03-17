@@ -1,6 +1,6 @@
 const client = require('../client.js')
 const CommandError = require('../CommandError.js')
-const http = require('http')
+const https = require('https')
 
 module.exports = {
   name: 'play',
@@ -28,8 +28,7 @@ module.exports = {
       }
 
       const connection = await message.member.voiceChannel.join()
-
-      http.get(process.env.MEMEBOT_API_ENDPOINT + meme.url, res => {
+      https.get(meme.url, res => {
         const dispatcher = connection.playStream(res)
         dispatcher.setVolumeLogarithmic(meme.volume)
         dispatcher.on('end', () => {
