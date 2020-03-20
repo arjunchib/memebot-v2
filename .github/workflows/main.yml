@@ -21,13 +21,13 @@ jobs:
         env:
           KEY: ${{ secrets.KEY }}
         run: |
-          printf "%s" "$KEY" > "${HOME}/memebot_rsa"
-          chmod 600 ${HOME}/memebot_rsa
+          mkdir ${HOME}/.ssh
+          printf "%s" "$KEY" > "${HOME}/.ssh/id_rsa"
+          chmod 600 ${HOME}/.ssh/id_rsa
       - name: Add server to known hosts
         env:
           SERVER_PUBLIC_KEY: ${{ secrets.SERVER_PUBLIC_KEY }}
         run: |
-          mkdir ${HOME}/.ssh
           printf "%s" "$SERVER_PUBLIC_KEY" > "${HOME}/.ssh/known_hosts"
           chmod 600 ${HOME}/.ssh/known_hosts
       - name: Add secrets to PM2 Config
@@ -36,10 +36,10 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: node ${GITHUB_WORKSPACE}/scripts/pm2-config.js DISCORD_TOKEN MEMEBOT_API_BASE_URL
       - name: Upload files to memebot
-        run: rsync -a --delete --exclude ".git" -e "ssh -i ${HOME}/memebot_rsa" ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
+        run: rsync -a --delete --exclude ".git" ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
       - name: Reload PM2 server
         run: |
-          ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i ${HOME}/memebot_rsa ${USERNAME}@${HOST} -T << EOF
+          ssh ${USERNAME}@${HOST} -T << EOF
             cd ~/memebot/
             nvm install
             yarn
