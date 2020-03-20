@@ -27,6 +27,7 @@ jobs:
         env:
           SERVER_PUBLIC_KEY: ${{ secrets.SERVER_PUBLIC_KEY }}
         run: |
+          mkdir ${HOME}/.ssh
           printf "%s" "$SERVER_PUBLIC_KEY" > "${HOME}/.ssh/known_hosts"
           chmod 600 ${HOME}/.ssh/known_hosts
       - name: Add secrets to PM2 Config
