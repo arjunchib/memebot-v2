@@ -37,7 +37,7 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
         run: node ${GITHUB_WORKSPACE}/scripts/pm2-config.js DISCORD_TOKEN MEMEBOT_API_BASE_URL
       - name: Upload files to memebot
-        run: rsync -azh --delete --exclude ".git" ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
+        run: rsync -azh --delete --exclude ".git" --exclude-from ".gitignore" ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
       - name: Reload PM2 server
         run: |
           ssh ${USERNAME}@${HOST} -T << EOF
