@@ -9,6 +9,7 @@ on:
 env:
   HOST: ${{ secrets.HOST }}
   USERNAME: ${{ secrets.USERNAME }}
+  NODE_ENV: production
 
 jobs:
   deploy:
