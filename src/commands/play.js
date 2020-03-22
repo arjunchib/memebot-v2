@@ -29,7 +29,7 @@ module.exports = {
 
       const connection = await message.member.voiceChannel.join()
 
-      http.get(process.env.MEMEBOT_API_ENDPOINT + meme.url, res => {
+      http.get(process.env.MEMEBOT_API_BASE_URL + meme.url, res => {
         const dispatcher = connection.playStream(res)
         dispatcher.setVolumeLogarithmic(meme.volume)
         dispatcher.on('end', () => {

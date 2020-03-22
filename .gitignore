@@ -2,4 +2,3 @@ node_modules
 *.swp
 .env
 .cache
-ecosystem.config.js

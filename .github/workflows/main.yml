@@ -1,0 +1,47 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  HOST: ${{ secrets.HOST }}
+  USERNAME: ${{ secrets.USERNAME }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout files
+        uses: actions/checkout@master
+      - name: Create identity file
+        env:
+          KEY: ${{ secrets.KEY }}
+        run: |
+          mkdir ${HOME}/.ssh
+          printf "%s" "$KEY" > "${HOME}/.ssh/id_rsa"
+          chmod 600 ${HOME}/.ssh/id_rsa
+      - name: Add server to known hosts
+        env:
+          SERVER_PUBLIC_KEY: ${{ secrets.SERVER_PUBLIC_KEY }}
+        run: |
+          printf "%s" "$SERVER_PUBLIC_KEY" > "${HOME}/.ssh/known_hosts"
+          chmod 600 ${HOME}/.ssh/known_hosts
+      - name: Add secrets to PM2 Config
+        env:
+          MEMEBOT_API_BASE_URL: ${{ secrets.MEMEBOT_API_BASE_URL }}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: node ${GITHUB_WORKSPACE}/scripts/pm2-config.js DISCORD_TOKEN MEMEBOT_API_BASE_URL
+      - name: Upload files to memebot
+        run: rsync -azh --delete --exclude ".git" --exclude-from ".gitignore" ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
+      - name: Reload PM2 server
+        run: |
+          ssh ${USERNAME}@${HOST} -T << EOF
+            cd ~/memebot/
+            nvm install
+            yarn
+            pm2 startOrReload ecosystem.config.json
+            pm2 save
+          EOF
