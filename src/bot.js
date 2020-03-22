@@ -44,7 +44,7 @@ client.once('ready', () => {
 
 client.on('message', message => {
   // Abort if wrong prefix or if message is from a bot
-  if (!message.content.startsWith(prefix + " ") || message.author.bot) return
+  if (!message.content.startsWith(prefix + ' ') || message.author.bot) return
 
   // Parse message
   const args = message.content
@@ -76,7 +76,7 @@ client.on('message', message => {
   } else if (commandName === 'play') {
     params = providedCommand
   }
-  command.execute(message, params).catch(error => {
+  command.execute(message, params, client).catch(error => {
     if (error.name === 'CommandError') {
       message.channel.send(error.message)
     } else {

@@ -1,4 +1,4 @@
-const client = require('../client.js')
+const gql_client = require('../client.js')
 const CommandError = require('../CommandError.js')
 const http = require('http')
 
@@ -8,7 +8,7 @@ module.exports = {
   usage: '<command>',
   minArgs: 0,
   maxArgs: 0,
-  async execute(message, command) {
+  async execute(message, command, client) {
     if (!message.member.voiceChannel) {
       throw new CommandError('You must join a voice channel to play memes')
     }
@@ -21,7 +21,16 @@ module.exports = {
     }`
 
     try {
-      const { meme } = await client.request(query, { command })
+      if (
+        client.voiceConnections != null &&
+        client.voiceConnections.find(
+          conn => conn.channel == message.member.voiceChannel
+        )
+      ) {
+        throw new CommandError('Memebot is already playing a meme.')
+      }
+
+      const { meme } = await gql_client.request(query, { command })
 
       if (meme === null) {
         throw new CommandError('There are no memes named ' + command + '.')
