@@ -9,21 +9,19 @@ module.exports = {
   maxargs: 1,
 
   async execute(message, args, client) {
-    const all_query = `{
+    const allQuery = `{
       memes {
         name
         tags
       }
     }`
-    let { memes } = await gqlClient.request(all_query)
+    let { memes } = await gqlClient.request(allQuery)
 
-    if (args != null && args.length == 1) {
+    if (args != null && args.length === 1) {
       memes = memes.filter(meme => meme.tags.includes(args[0]))
     }
 
-    const chosenMeme = memes.map(meme => meme.name)[
-      Math.floor(Math.random() * memes.length)
-    ]
+    const chosenMeme = memes[Math.floor(Math.random() * memes.length)].name
 
     message.channel.send('Now playing ' + chosenMeme)
 
