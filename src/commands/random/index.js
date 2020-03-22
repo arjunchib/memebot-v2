@@ -1,5 +1,5 @@
-const gqlClient = require('../client.js')
-const play = require('./play.js').execute
+const gqlClient = require('../../client.js')
+const play = require('../play').execute
 
 module.exports = {
   name: 'random',

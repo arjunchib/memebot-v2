@@ -1,5 +1,5 @@
-const gql_client = require('../client.js')
-const CommandError = require('../CommandError.js')
+const gql_client = require('../../client.js')
+const CommandError = require('../../CommandError.js')
 const http = require('http')
 
 module.exports = {

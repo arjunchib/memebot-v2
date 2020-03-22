@@ -1,5 +1,5 @@
-const client = require('../client.js')
-const CommandError = require('../CommandError.js')
+const client = require('../../client.js')
+const CommandError = require('../../CommandError.js')
 
 module.exports = {
   name: 'tag',

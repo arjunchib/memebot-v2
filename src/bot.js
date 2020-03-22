@@ -25,12 +25,15 @@ const client = new Discord.Client()
 // Get commands
 client.commands = new Discord.Collection()
 
-const commandFiles = fs
-  .readdirSync(path.resolve(__dirname, 'commands'))
-  .filter(file => file.endsWith('.js'))
+const commandDirs = fs
+  .readdirSync(path.resolve(__dirname, 'commands'), {
+    withFileTypes: true
+  })
+  .filter(dirent => dirent.isDirectory())
+  .map(dirent => dirent.name)
 
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`)
+for (const dir of commandDirs) {
+  const command = require(`./commands/${dir}`)
   client.commands.set(command.name, command)
 }
 

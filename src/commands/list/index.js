@@ -1,5 +1,5 @@
-const client = require('../client.js')
-const CommandError = require('../CommandError.js')
+const client = require('../../client.js')
+const CommandError = require('../../CommandError.js')
 
 module.exports = {
   name: 'list',
@@ -83,7 +83,11 @@ async function listMemes(message, sortType, options) {
     message.channel.send('No memes found')
   } else {
     message.channel.send(
-      JSON.stringify(memes.map(meme => meme.name), null, ''),
+      JSON.stringify(
+        memes.map(meme => meme.name),
+        null,
+        ''
+      ),
       {
         split: { char: ',', prepend: ' ' },
         code: true
