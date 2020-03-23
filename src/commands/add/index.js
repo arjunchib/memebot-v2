@@ -1,4 +1,4 @@
-const execute = require('./add')
+const execute = require('./execute')
 
 module.exports = {
   name: 'add',
