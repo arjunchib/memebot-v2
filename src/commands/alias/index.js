@@ -1,4 +1,4 @@
-const execute = require('./alias')
+const execute = require('./execute')
 
 module.exports = {
   name: 'alias',

@@ -1,9 +1,11 @@
 const fs = require('fs')
 const path = require('path')
 const graphqlClient = require('../../graphql-client')
-const CommandError = require('../../utils/CommandError')
+const handleServerError = require('../../utils/handleServerError.js')
 
-const query = fs.readFileSync(path.resolve(__dirname, './query.gql'))
+const query = fs.readFileSync(
+  path.resolve(__dirname, './add-alias-to-meme.gql')
+)
 
 module.exports = async (message, args) => {
   const name = args[0]
@@ -13,7 +15,6 @@ module.exports = async (message, args) => {
     await graphqlClient.request(query, { name, alias })
     message.channel.send(`Added command ${alias} to ${name}`)
   } catch (error) {
-    console.error(error)
-    throw new CommandError('Something went wrong when aliasing this meme')
+    handleServerError(error)
   }
 }
