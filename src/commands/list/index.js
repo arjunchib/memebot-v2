@@ -89,8 +89,8 @@ async function listMemes(message, sortType, options) {
         ''
       ),
       {
-        split: { char: ',', prepend: ' ' },
-        code: true
+        split: { char: ',', prepend: '[', append: ']' },
+        code: 'json'
       }
     )
   }
@@ -105,7 +105,7 @@ async function listTags(message) {
   tags.sort()
 
   message.channel.send(JSON.stringify(tags, null, ''), {
-    split: { char: ',', prepend: ' ' },
-    code: true
+    split: { char: ',', prepend: '[', append: ']' },
+    code: 'json'
   })
 }

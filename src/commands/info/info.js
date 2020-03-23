@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 const client = require('../../client.js')
 const CommandError = require('../../CommandError.js')
-const { codeBlockify } = require('../../utils.js')
 
 const query = fs.readFileSync(path.resolve(__dirname, './query.gql'))
 
@@ -16,7 +15,7 @@ module.exports = async (message, args) => {
       console.log(info)
       throw new CommandError('There is no meme named ' + command + '.')
     }
-    message.channel.send(codeBlockify(JSON.stringify(info.meme, null, 2)))
+    message.channel.send(JSON.stringify(info.meme, null, 2), { code: 'json' })
   } catch (error) {
     if (error instanceof CommandError) {
       throw error
