@@ -1,4 +1,4 @@
-const execute = require('./delete')
+const execute = require('./execute')
 
 module.exports = {
   name: 'delete',
