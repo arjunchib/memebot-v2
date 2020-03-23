@@ -4,7 +4,8 @@ const graphqlClient = require('../../graphql-client')
 const handleServerError = require('../../utils/handleServerError.js')
 
 const query = fs.readFileSync(
-  path.resolve(__dirname, './add-alias-to-meme.gql')
+  path.resolve(__dirname, './add-alias-to-meme.gql'),
+  'utf8'
 )
 
 module.exports = async (message, args) => {

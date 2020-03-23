@@ -1,4 +1,4 @@
-const execute = require('./info')
+const execute = require('./execute')
 
 module.exports = {
   name: 'info',
