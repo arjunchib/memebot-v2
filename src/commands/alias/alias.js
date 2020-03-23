@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
-const client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 
 const query = fs.readFileSync(path.resolve(__dirname, './query.gql'))
 
@@ -10,7 +10,7 @@ module.exports = async (message, args) => {
   const alias = args[1]
 
   try {
-    await client.request(query, { name, alias })
+    await graphqlClient.request(query, { name, alias })
     message.channel.send(`Added command ${alias} to ${name}`)
   } catch (error) {
     console.error(error)

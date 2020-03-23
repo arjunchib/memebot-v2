@@ -1,5 +1,5 @@
-const client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 
 module.exports = {
   name: 'unalias',
@@ -28,7 +28,7 @@ module.exports = {
     }`
 
     try {
-      await client.request(query, { name, alias })
+      await graphqlClient.request(query, { name, alias })
       message.channel.send(`Removed command ${alias} from ${name}`)
     } catch (error) {
       console.error(error)

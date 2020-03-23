@@ -1,5 +1,5 @@
-const client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 
 module.exports = {
   name: 'list',
@@ -54,7 +54,7 @@ async function listMemes(message, sortType, options) {
       }
     }`
 
-  let { memes } = await client.request(query)
+  let { memes } = await graphqlClient.request(query)
 
   if (options && options.tag) {
     memes = memes.filter(meme => meme.tags.includes(options.tag))
@@ -101,7 +101,7 @@ async function listTags(message) {
     tags
   }`
 
-  let { tags } = await client.request(query)
+  let { tags } = await graphqlClient.request(query)
   tags.sort()
 
   message.channel.send(JSON.stringify(tags, null, ''), {

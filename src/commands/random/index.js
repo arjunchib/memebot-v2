@@ -1,4 +1,4 @@
-const gqlClient = require('../../client.js')
+const graphqlClient = require('../../graphql-client')
 const play = require('../play').execute
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
         tags
       }
     }`
-    let { memes } = await gqlClient.request(allQuery)
+    let { memes } = await graphqlClient.request(allQuery)
 
     if (args != null && args.length === 1) {
       memes = memes.filter(meme => meme.tags.includes(args[0]))

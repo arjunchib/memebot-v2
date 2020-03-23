@@ -1,5 +1,5 @@
-const client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 
 module.exports = {
   name: 'rename',
@@ -28,7 +28,7 @@ module.exports = {
     }`
 
     try {
-      await client.request(query, { name, newName })
+      await graphqlClient.request(query, { name, newName })
       message.channel.send(`Rename ${name} to ${newName}`)
     } catch (error) {
       error.response.errors.forEach(x => console.error(x))

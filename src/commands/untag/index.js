@@ -1,5 +1,5 @@
-const client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 
 module.exports = {
   name: 'untag',
@@ -28,7 +28,7 @@ module.exports = {
     }`
 
     try {
-      await client.request(query, { name, tag })
+      await graphqlClient.request(query, { name, tag })
       message.channel.send(`Removed tag ${tag} from ${name}`)
     } catch (error) {
       console.error(error)

@@ -1,5 +1,5 @@
-const client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 
 module.exports = {
   name: 'volume',
@@ -34,7 +34,7 @@ module.exports = {
     }`
 
     try {
-      await client.request(query, { name, volume })
+      await graphqlClient.request(query, { name, volume })
       message.channel.send(`Set volume of ${name} to ${volume}`)
     } catch (error) {
       console.error(error)

@@ -1,5 +1,5 @@
-const client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 
 module.exports = {
   name: 'tag',
@@ -28,7 +28,7 @@ module.exports = {
     }`
 
     try {
-      await client.request(query, { name, tag })
+      await graphqlClient.request(query, { name, tag })
       message.channel.send(`Added tag ${tag} to ${name}`)
     } catch (error) {
       console.error(error)

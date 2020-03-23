@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
-const client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 
 const query = fs.readFileSync(path.resolve(__dirname, './query.gql'))
 
@@ -9,7 +9,7 @@ module.exports = async (message, args) => {
   const command = args[0]
 
   try {
-    const info = await client.request(query, { command })
+    const info = await graphqlClient.request(query, { command })
     console.log(typeof info)
     if (info.meme === null) {
       console.log(info)

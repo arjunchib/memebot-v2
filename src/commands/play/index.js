@@ -1,5 +1,5 @@
-const gql_client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 const http = require('http')
 
 module.exports = {
@@ -30,7 +30,7 @@ module.exports = {
         throw new CommandError('Memebot is already playing a meme.')
       }
 
-      const { meme } = await gql_client.request(query, { command })
+      const { meme } = await graphqlClient.request(query, { command })
 
       if (meme === null) {
         throw new CommandError('There are no memes named ' + command + '.')

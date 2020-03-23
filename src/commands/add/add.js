@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
-const client = require('../../client.js')
-const CommandError = require('../../CommandError.js')
+const graphqlClient = require('../../graphql-client')
+const CommandError = require('../../utils/CommandError')
 const getURL = require('./helpers/getURL')
 const getTimes = require('./helpers/getTimes')
 const getAliases = require('./helpers/getAliases')
@@ -20,7 +20,7 @@ module.exports = async (message, args) => {
   }
 
   try {
-    await client.request(query, {
+    await graphqlClient.request(query, {
       name: meme.name,
       authorID: meme.author.id,
       authorName: meme.author.name,
