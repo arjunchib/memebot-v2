@@ -1,8 +1,8 @@
-const play = require('../play').execute
-const graphqlClient = require('../../graphql-client')
 const fs = require('fs')
-const path = require('path')
+const graphqlClient = require('../../graphql-client')
 const handleServerError = require('../../utils/handleServerError')
+const path = require('path')
+const play = require('../play').execute
 
 const query = fs.readFileSync(path.resolve(__dirname, './memes.gql'), 'utf8')
 
