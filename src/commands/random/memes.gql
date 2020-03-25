@@ -1,0 +1,6 @@
+{
+  memes {
+    name
+    tags
+  }
+}
