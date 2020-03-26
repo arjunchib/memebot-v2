@@ -10,6 +10,8 @@ const query = fs.readFileSync(
 
 module.exports = async (message, args) => {
   try {
+    message.channel.startTyping()
+
     const name = args[3]
 
     await graphqlClient.request(query, {
@@ -23,5 +25,7 @@ module.exports = async (message, args) => {
     message.channel.send(`Added command ${name}`)
   } catch (error) {
     handleServerError(error)
+  } finally {
+    message.channel.stopTyping(true)
   }
 }
