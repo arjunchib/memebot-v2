@@ -7,9 +7,9 @@ const handleServerError = require('../../utils/handleServerError.js')
 const query = fs.readFileSync(path.resolve(__dirname, './info.gql'), 'utf8')
 
 module.exports = async (message, args) => {
-  const command = args[0]
-
   try {
+    const command = args[0]
+
     const info = await graphqlClient.request(query, { command })
     if (info.meme == null) {
       throw new CommandError(`There is no meme named ${command}`)

@@ -9,10 +9,10 @@ const query = fs.readFileSync(
 )
 
 module.exports = async (message, args) => {
-  const name = args[0]
-  const alias = args[1]
-
   try {
+    const name = args[0]
+    const alias = args[1]
+
     await graphqlClient.request(query, { name, alias })
     message.channel.send(`Added command ${alias} to ${name}`)
   } catch (error) {

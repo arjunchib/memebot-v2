@@ -9,9 +9,9 @@ const query = fs.readFileSync(
 )
 
 module.exports = async (message, args) => {
-  const name = args[0]
-
   try {
+    const name = args[0]
+
     await graphqlClient.request(query, { name })
     message.channel.send(`Deleted ${name}`)
   } catch (error) {

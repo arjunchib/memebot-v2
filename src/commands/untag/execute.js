@@ -9,10 +9,10 @@ const query = fs.readFileSync(
 )
 
 module.exports = async (message, args) => {
-  const name = args[0]
-  const tag = args[1]
-
   try {
+    const name = args[0]
+    const tag = args[1]
+
     await graphqlClient.request(query, { name, tag })
     message.channel.send(`Removed tag ${tag} from ${name}`)
   } catch (error) {

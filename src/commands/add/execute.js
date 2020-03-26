@@ -9,9 +9,9 @@ const query = fs.readFileSync(
 )
 
 module.exports = async (message, args) => {
-  const name = args[3]
-
   try {
+    const name = args[3]
+
     await graphqlClient.request(query, {
       name,
       authorID: message.member.id,
