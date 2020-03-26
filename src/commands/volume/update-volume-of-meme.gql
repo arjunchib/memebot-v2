@@ -1,0 +1,15 @@
+mutation UpdateVolumeOfMeme($name: String!, $volume: Float!) {
+  updateVolumeOfMeme(name: $name, volume: $volume) {
+    _id
+    name
+    author {
+      id
+      name
+    }
+    url
+    commands
+    tags
+    volume
+    createdAt
+  }
+}
