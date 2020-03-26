@@ -1,0 +1,7 @@
+{
+  memes {
+    name
+    createdAt
+    tags
+  }
+}

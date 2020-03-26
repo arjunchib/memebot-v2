@@ -1,0 +1,15 @@
+mutation RemoveTagFromMeme($name: String!, $tag: String!) {
+  removeTagFromMeme(name: $name, tag: $tag) {
+    _id
+    name
+    author {
+      id
+      name
+    }
+    url
+    commands
+    tags
+    volume
+    createdAt
+  }
+}

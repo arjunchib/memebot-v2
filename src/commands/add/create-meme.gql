@@ -1,0 +1,28 @@
+mutation CreateMeme(
+  $name: String!
+  $authorID: ID!
+  $authorName: String!
+  $url: String!
+  $start: String!
+  $end: String!
+) {
+  createMeme(
+    name: $name
+    author: { id: $authorID, name: $authorName }
+    url: $url
+    start: $start
+    end: $end
+  ) {
+    _id
+    name
+    author {
+      id
+      name
+    }
+    url
+    commands
+    tags
+    volume
+    createdAt
+  }
+}

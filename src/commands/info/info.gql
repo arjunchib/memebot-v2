@@ -1,0 +1,15 @@
+query Info($command: String!) {
+  meme(command: $command) {
+    _id
+    name
+    author {
+      id
+      name
+    }
+    url
+    commands
+    tags
+    volume
+    createdAt
+  }
+}
