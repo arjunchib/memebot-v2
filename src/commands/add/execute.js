@@ -1,18 +1,18 @@
-const fs = require('fs')
-const path = require('path')
-const graphqlClient = require('../../graphql-client')
-const handleServerError = require('../../utils/handleServerError.js')
+const fs = require("fs");
+const path = require("path");
+const graphqlClient = require("../../graphql-client");
+const handleServerError = require("../../utils/handleServerError.js");
 
 const query = fs.readFileSync(
-  path.resolve(__dirname, './create-meme.gql'),
-  'utf8'
-)
+  path.resolve(__dirname, "./create-meme.gql"),
+  "utf8"
+);
 
 module.exports = async (message, args) => {
   try {
-    message.channel.startTyping()
+    message.channel.startTyping();
 
-    const name = args[3]
+    const name = args[3];
 
     await graphqlClient.request(query, {
       name,
@@ -20,12 +20,12 @@ module.exports = async (message, args) => {
       authorName: message.member.displayName,
       url: args[0],
       start: args[1],
-      end: args[2]
-    })
-    message.channel.send(`Added command ${name}`)
+      end: args[2],
+    });
+    message.channel.send(`Added command ${name}`);
   } catch (error) {
-    handleServerError(error)
+    handleServerError(error);
   } finally {
-    message.channel.stopTyping(true)
+    message.channel.stopTyping(true);
   }
-}
+};
