@@ -1,13 +1,13 @@
-const CommandError = require('./CommandError')
+const CommandError = require("./CommandError");
 
-module.exports = error => {
+module.exports = (error) => {
   if (error instanceof CommandError) {
-    throw error
+    throw error;
   } else if (error.response && error.response.errors) {
-    const serverErrors = JSON.stringify(error.response.errors, undefined, 2)
-    console.error(`MemeBot API server error: ${serverErrors}`)
+    const serverErrors = JSON.stringify(error.response.errors, undefined, 2);
+    console.error(`MemeBot API server error: ${serverErrors}`);
   } else {
-    console.error(error)
+    console.error(error);
   }
-  throw new CommandError('Something went wrong')
-}
+  throw new CommandError("Something went wrong");
+};
