@@ -1,6 +1,6 @@
 query Meme($command: String!) {
   meme(command: $command) {
-    url
+    originUrl
     volume
   }
 }

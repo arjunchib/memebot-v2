@@ -24,7 +24,7 @@ module.exports = async (message, command) => {
     }
 
     const connection = await message.member.voice.channel.join();
-    const dispatcher = connection.play(meme.url);
+    const dispatcher = connection.play(meme.originUrl);
     dispatcher.setVolumeLogarithmic(meme.volume);
     dispatcher.on("finish", () => {
       connection.disconnect();

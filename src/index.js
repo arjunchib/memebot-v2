@@ -1,6 +1,7 @@
+require("dotenv").config();
+
 const path = require("path");
 const { ShardingManager } = require("discord.js");
-require("dotenv").config();
 
 const botPath = path.resolve(__dirname, "bot.js");
 const manager = new ShardingManager(botPath, {

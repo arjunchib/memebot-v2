@@ -1,13 +1,14 @@
+require("dotenv").config();
+
 const fs = require("fs");
 const path = require("path");
 const Discord = require("discord.js");
-require("dotenv").config();
 
 /* * * * * * * * * *
  *  SETUP CLIENT   *
  * * * * * * * * * */
 
-// Get environment vars
+// Get prefix
 const prefix = process.env.COMMAND_PREFIX;
 
 // Setup file structure
