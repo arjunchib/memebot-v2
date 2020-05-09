@@ -1,6 +1,6 @@
 module.exports = class CommandError extends Error {
   constructor(message) {
     super(message);
-    this.name = "CommandError";
+    this.name = this.constructor.name;
   }
 };
