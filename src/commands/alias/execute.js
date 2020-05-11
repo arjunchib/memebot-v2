@@ -1,21 +1,9 @@
-const fs = require("fs");
-const path = require("path");
-const graphqlClient = require("../../graphql-client");
-const handleServerError = require("../../utils/handleServerError.js");
+const { requireGQL } = require("../../utils");
 
-const query = fs.readFileSync(
-  path.resolve(__dirname, "./add-alias-to-meme.gql"),
-  "utf8"
-);
+const query = requireGQL(__dirname, "./add-alias-to-meme.gql");
 
-module.exports = async (message, args) => {
-  try {
-    const name = args[0];
-    const alias = args[1];
-
-    await graphqlClient.request(query, { name, alias });
-    message.channel.send(`Added command ${alias} to ${name}`);
-  } catch (error) {
-    handleServerError(error);
-  }
+module.exports = async ({ message, args, graphqlClient }) => {
+  const [name, alias] = args;
+  await graphqlClient.request(query, { name, alias });
+  message.channel.send(`Added alias ${alias} to ${name}`);
 };

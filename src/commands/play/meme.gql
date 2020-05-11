@@ -1,5 +1,5 @@
-query Meme($command: String!) {
-  meme(command: $command) {
+query Meme($name: String!) {
+  meme(name: $name) {
     originUrl
     volume
   }

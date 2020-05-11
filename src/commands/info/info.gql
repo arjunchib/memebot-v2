@@ -1,13 +1,13 @@
-query Info($command: String!) {
-  meme(command: $command) {
+query Info($name: String!) {
+  meme(name: $name) {
     _id
-    name
+    names
     author {
       id
       name
     }
-    url
-    commands
+    edgeUrl
+    sourceUrl
     tags
     volume
     createdAt

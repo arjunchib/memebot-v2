@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 
-module.exports = (id) => {
-  return fs.readFileSync(path.resolve(__dirname, id), "utf8");
+module.exports = (dirname, id) => {
+  return fs.readFileSync(path.resolve(dirname, id), "utf8");
 };

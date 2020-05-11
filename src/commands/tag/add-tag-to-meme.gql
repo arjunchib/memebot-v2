@@ -1,15 +1,5 @@
 mutation AddTagToMeme($name: String!, $tag: String!) {
   addTagToMeme(name: $name, tag: $tag) {
     _id
-    name
-    author {
-      id
-      name
-    }
-    url
-    commands
-    tags
-    volume
-    createdAt
   }
 }

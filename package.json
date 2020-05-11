@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "repository": "https://github.com/arjunchib/memebot.git",
   "scripts": {
-    "develop": "nodemon ./src/bot.js"
+    "develop": "nodemon -e js,json,gql ./src/bot.js"
   },
   "prettier": {
     "proseWrap": "always"

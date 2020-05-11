@@ -1,21 +1,9 @@
-const handleServerError = require("../../utils/handleServerError");
-const graphqlClient = require("../../graphql-client");
-const fs = require("fs");
-const path = require("path");
+const { requireGQL } = require("../../utils");
 
-const query = fs.readFileSync(
-  path.resolve(__dirname, "./remove-alias-from-meme.gql"),
-  "utf8"
-);
+const query = requireGQL(__dirname, "./remove-alias-from-meme.gql");
 
-module.exports = async (message, args) => {
-  try {
-    const name = args[0];
-    const alias = args[1];
-
-    await graphqlClient.request(query, { name, alias });
-    message.channel.send(`Removed command ${alias} from ${name}`);
-  } catch (error) {
-    handleServerError(error);
-  }
+module.exports = async ({ message, args, graphqlClient }) => {
+  const [name, alias] = args;
+  await graphqlClient.request(query, { name, alias });
+  message.channel.send(`Removed alias ${alias} from ${name}`);
 };
