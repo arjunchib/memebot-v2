@@ -40,8 +40,8 @@ jobs:
         run: node ${GITHUB_WORKSPACE}/scripts/hydrate-dotenv.js
       - name: Upload files to memebot
         run:
-          rsync -azh --delete --exclude ".git" --exclude-from ".gitignore"
-          ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
+          rsync -azh --delete --include ".env" --exclude ".git" --exclude-from
+          ".gitignore" ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
       - name: Reload PM2 server
         run: |
           ssh ${USERNAME}@${HOST} -T << EOF
