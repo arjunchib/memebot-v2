@@ -1,35 +1,30 @@
-const CommandError = require("../../utils/CommandError");
-const fs = require("fs");
-const graphqlClient = require("../../graphql-client");
-const path = require("path");
-const handleServerError = require("../../utils/handleServerError");
-const { isAlreadyPlaying } = require("./helpers");
+const { CommandError, requireGQL } = require("../../utils");
 
-const query = fs.readFileSync(path.resolve(__dirname, "./meme.gql"), "utf8");
+const isAlreadyPlaying = (message) => {
+  return message.client.voice.connections.find(
+    (connection) => connection.channel === message.member.voiceChannel
+  );
+};
 
-module.exports = async (message, command) => {
-  try {
-    if (!message.member.voice.channel) {
-      throw new CommandError("You must join a voice channel to play memes");
-    }
+const query = requireGQL(__dirname, "./meme.gql");
 
-    if (isAlreadyPlaying(message)) {
-      return;
-    }
-
-    const { meme } = await graphqlClient.request(query, { command });
-
-    if (meme === null) {
-      throw new CommandError(`There are no memes named ${command}`);
-    }
-
-    const connection = await message.member.voice.channel.join();
-    const dispatcher = connection.play(meme.url);
-    dispatcher.setVolumeLogarithmic(meme.volume);
-    dispatcher.on("finish", () => {
-      connection.disconnect();
-    });
-  } catch (error) {
-    handleServerError(error);
+module.exports = async ({ message, command, graphqlClient }) => {
+  if (!message.member.voice.channel) {
+    throw new CommandError("You must join a voice channel to play memes");
   }
+
+  if (isAlreadyPlaying(message)) return;
+
+  const { meme } = await graphqlClient.request(query, { name: command });
+
+  if (meme === null) {
+    throw new CommandError(`There are no memes named ${command}`);
+  }
+
+  const connection = await message.member.voice.channel.join();
+  const dispatcher = connection.play(meme.originUrl);
+  dispatcher.setVolumeLogarithmic(meme.volume);
+  dispatcher.on("finish", () => {
+    connection.disconnect();
+  });
 };

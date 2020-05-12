@@ -1,11 +1,9 @@
 const SortType = require("./SortType");
-const fs = require("fs");
-const graphqlClient = require("../../graphql-client");
-const path = require("path");
+const { requireGQL } = require("../../utils");
 
-const query = fs.readFileSync(path.resolve(__dirname, "./memes.gql"), "utf8");
+const query = requireGQL(__dirname, "./memes.gql");
 
-module.exports = async (message, sortType, options) => {
+module.exports = async (message, sortType, options, graphqlClient) => {
   let { memes } = await graphqlClient.request(query);
 
   if (options && options.tag) {
@@ -20,10 +18,10 @@ module.exports = async (message, sortType, options) => {
       memes.sort((x, y) => x.createdAt.localeCompare(y.createdAt));
       break;
     case SortType.ALPHABETIC:
-      memes.sort((x, y) => x.name.localeCompare(y.name));
+      memes.sort((x, y) => x.names[0].localeCompare(y.names[0]));
       break;
     default:
-      memes.sort((x, y) => x.name.localeCompare(y.name));
+      memes.sort((x, y) => x.names[0].localeCompare(y.names[0]));
       break;
   }
 
@@ -34,9 +32,9 @@ module.exports = async (message, sortType, options) => {
   if (memes.length == 0) {
     message.channel.send("No memes found");
   } else {
-    const memesJSON = JSON.stringify(memes.map((meme) => meme.name));
+    const memesJSON = JSON.stringify(memes.map((meme) => meme.names[0]));
     message.channel.send(memesJSON, {
-      split: { char: ",", prepend: "[", append: "]" },
+      split: { char: "," },
       code: "json",
     });
   }

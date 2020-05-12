@@ -1,5 +1,5 @@
 mutation CreateMeme(
-  $name: String!
+  $names: [String!]!
   $authorID: ID!
   $authorName: String!
   $url: String!
@@ -7,22 +7,20 @@ mutation CreateMeme(
   $end: String!
 ) {
   createMeme(
-    name: $name
+    names: $names
     author: { id: $authorID, name: $authorName }
     url: $url
     start: $start
     end: $end
   ) {
     _id
-    name
+    names
     author {
       id
       name
     }
-    url
-    commands
-    tags
-    volume
+    edgeUrl
+    sourceUrl
     createdAt
   }
 }

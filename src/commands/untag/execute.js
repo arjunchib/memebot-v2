@@ -1,21 +1,9 @@
-const handleServerError = require("../../utils/handleServerError");
-const graphqlClient = require("../../graphql-client");
-const fs = require("fs");
-const path = require("path");
+const { requireGQL } = require("../../utils");
 
-const query = fs.readFileSync(
-  path.resolve(__dirname, "./remove-tag-from-meme.gql"),
-  "utf8"
-);
+const query = requireGQL(__dirname, "./remove-tag-from-meme.gql");
 
-module.exports = async (message, args) => {
-  try {
-    const name = args[0];
-    const tag = args[1];
-
-    await graphqlClient.request(query, { name, tag });
-    message.channel.send(`Removed tag ${tag} from ${name}`);
-  } catch (error) {
-    handleServerError(error);
-  }
+module.exports = async ({ message, args, graphqlClient }) => {
+  const [name, tag] = args;
+  await graphqlClient.request(query, { name, tag });
+  message.channel.send(`Removed tag ${tag} from ${name}`);
 };

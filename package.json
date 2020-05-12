@@ -5,7 +5,27 @@
   "main": "src/index.js",
   "repository": "https://github.com/arjunchib/memebot.git",
   "scripts": {
-    "develop": "nodemon ./src/bot.js"
+    "develop": "nodemon -e js,json,gql ./src/bot.js"
+  },
+  "prettier": {
+    "proseWrap": "always"
+  },
+  "eslintConfig": {
+    "env": {
+      "commonjs": true,
+      "es6": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2018
+    },
+    "rules": {
+      "no-console": "off"
+    }
   },
   "dependencies": {
     "@discordjs/opus": "^0.1.0",

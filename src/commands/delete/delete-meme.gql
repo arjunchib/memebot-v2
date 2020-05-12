@@ -1,15 +1,5 @@
 mutation DeleteMeme($name: String!) {
   deleteMeme(name: $name) {
     _id
-    name
-    author {
-      id
-      name
-    }
-    url
-    commands
-    tags
-    volume
-    createdAt
   }
 }

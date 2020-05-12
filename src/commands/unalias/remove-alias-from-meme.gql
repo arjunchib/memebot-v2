@@ -1,15 +1,6 @@
 mutation RemoveAliasFromMeme($name: String!, $alias: String!) {
   removeAliasFromMeme(name: $name, alias: $alias) {
     _id
-    name
-    author {
-      id
-      name
-    }
-    url
-    commands
-    tags
-    volume
-    createdAt
+    names
   }
 }
