@@ -29,13 +29,19 @@ jobs:
         run: |
           printf "%s" "$SERVER_PUBLIC_KEY" > "${HOME}/.ssh/known_hosts"
           chmod 600 ${HOME}/.ssh/known_hosts
+      - name: Install dependencies
+        run: yarn install --prod --frozen-lockfile --non-interactive
       - name: Add secrets to PM2 Config
         env:
-          MEMEBOT_API_BASE_URL: ${{ secrets.MEMEBOT_API_BASE_URL }}
+          COMMAND_PREFIX: !mb
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-        run: node ${GITHUB_WORKSPACE}/scripts/pm2-config.js DISCORD_TOKEN MEMEBOT_API_BASE_URL
+          NODE_ENV: production
+          MEMEBOT_API_ENDPOINT: ${{ secrets.MEMEBOT_API_BASE_URL }}
+        run: node ${GITHUB_WORKSPACE}/scripts/hydrate-dotenv.js
       - name: Upload files to memebot
-        run: rsync -azh --delete --exclude ".git" --exclude-from ".gitignore" ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
+        run:
+          rsync -azh --delete --exclude ".git" --exclude-from ".gitignore"
+          ${GITHUB_WORKSPACE}/ ${USERNAME}@${HOST}:~/memebot/
       - name: Reload PM2 server
         run: |
           ssh ${USERNAME}@${HOST} -T << EOF
