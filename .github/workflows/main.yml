@@ -31,9 +31,9 @@ jobs:
           chmod 600 ${HOME}/.ssh/known_hosts
       - name: Install dependencies
         run: yarn install --prod --frozen-lockfile --non-interactive
-      - name: Add secrets to PM2 Config
+      - name: Add secrets to .env
         env:
-          COMMAND_PREFIX: !mb
+          COMMAND_PREFIX: "!mb"
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           NODE_ENV: production
           MEMEBOT_API_ENDPOINT: ${{ secrets.MEMEBOT_API_BASE_URL }}
