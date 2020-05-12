@@ -28,7 +28,13 @@ module.exports = async (message, graphqlClient) => {
 
   // Execute command
   try {
-    await command.execute({ message, args, command: firstArg, graphqlClient });
+    await command.execute({
+      message,
+      args,
+      command: firstArg,
+      graphqlClient,
+      commands,
+    });
   } catch (e) {
     if (e instanceof CommandError) {
       message.channel.send(e.message);

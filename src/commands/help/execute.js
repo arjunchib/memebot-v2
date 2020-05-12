@@ -1,8 +1,7 @@
-module.exports = async (message, commands) => {
-  const helpMessage = [];
-  for (const command of commands.values()) {
-    helpMessage.push(`**${command.name}** - ${command.description}
-\`${command.usage}\``);
-  }
+module.exports = async ({ message, commands }) => {
+  const helpMessage = Object.values(commands).map((command) => {
+    return `**${command.name}** - ${command.description}
+\`${command.usage}\``;
+  });
   message.channel.send(helpMessage.join("\n\n"));
 };

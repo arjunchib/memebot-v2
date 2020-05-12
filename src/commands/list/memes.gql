@@ -1,6 +1,6 @@
 {
   memes {
-    name
+    names
     createdAt
     tags
   }

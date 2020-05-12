@@ -1,48 +1,41 @@
 const SortType = require("./SortType");
-const fs = require("fs");
-const graphqlClient = require("../../graphql-client");
-const path = require("path");
+const { requireGQL } = require("../../utils");
 
-const query = fs.readFileSync(path.resolve(__dirname, "./memes.gql"), "utf8");
+const query = requireGQL(__dirname, "./memes.gql");
 
-module.exports = async (message, sortType, options) => {
-  try {
-    let { memes } = await graphqlClient.request(query);
+module.exports = async (message, sortType, options, graphqlClient) => {
+  let { memes } = await graphqlClient.request(query);
 
-    if (options && options.tag) {
-      memes = memes.filter((meme) => meme.tags.includes(options.tag));
-    }
+  if (options && options.tag) {
+    memes = memes.filter((meme) => meme.tags.includes(options.tag));
+  }
 
-    switch (sortType) {
-      case SortType.NEWEST:
-        memes.sort((x, y) => y.createdAt.localeCompare(x.createdAt));
-        break;
-      case SortType.OLDEST:
-        memes.sort((x, y) => x.createdAt.localeCompare(y.createdAt));
-        break;
-      case SortType.ALPHABETIC:
-        memes.sort((x, y) => x.name.localeCompare(y.name));
-        break;
-      default:
-        memes.sort((x, y) => x.name.localeCompare(y.name));
-        break;
-    }
+  switch (sortType) {
+    case SortType.NEWEST:
+      memes.sort((x, y) => y.createdAt.localeCompare(x.createdAt));
+      break;
+    case SortType.OLDEST:
+      memes.sort((x, y) => x.createdAt.localeCompare(y.createdAt));
+      break;
+    case SortType.ALPHABETIC:
+      memes.sort((x, y) => x.names[0].localeCompare(y.names[0]));
+      break;
+    default:
+      memes.sort((x, y) => x.names[0].localeCompare(y.names[0]));
+      break;
+  }
 
-    if (options && options.count) {
-      memes = memes.slice(0, options.count);
-    }
+  if (options && options.count) {
+    memes = memes.slice(0, options.count);
+  }
 
-    if (memes.length == 0) {
-      message.channel.send("No memes found");
-    } else {
-      const memesJSON = JSON.stringify(memes.map((meme) => meme.name));
-      message.channel.send(memesJSON, {
-        split: { char: "," },
-        code: "json",
-      });
-    }
-  } catch (e) {
-    console.log(e);
-    throw e;
+  if (memes.length == 0) {
+    message.channel.send("No memes found");
+  } else {
+    const memesJSON = JSON.stringify(memes.map((meme) => meme.names[0]));
+    message.channel.send(memesJSON, {
+      split: { char: "," },
+      code: "json",
+    });
   }
 };
