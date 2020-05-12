@@ -30,7 +30,7 @@ jobs:
           printf "%s" "$SERVER_PUBLIC_KEY" > "${HOME}/.ssh/known_hosts"
           chmod 600 ${HOME}/.ssh/known_hosts
       - name: Install dependencies
-        run: yarn install --prod --frozen-lockfile --non-interactive
+        run: yarn global add dotenv
       - name: Add secrets to .env
         env:
           COMMAND_PREFIX: "!mb"
