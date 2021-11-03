@@ -34,7 +34,7 @@
     "fluent-ffmpeg": "^2.1.2",
     "graphql-request": "^1.8.2",
     "mz": "^2.7.0",
-    "validator": "^13.0.0",
+    "validator": "^13.7.0",
     "ytdl-core": "^2.0.1"
   },
   "devDependencies": {
